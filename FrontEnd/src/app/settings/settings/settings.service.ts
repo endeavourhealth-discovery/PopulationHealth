@@ -11,7 +11,7 @@ export class SettingsService {
     const params = new URLSearchParams();
     params.append('name', name);
 
-    return this.http.get('{information-model}/api/template/message', {search: params})
+    return this.http.get('/api/template/message', {search: params})
       .map((result) => result.text());
   }
 }

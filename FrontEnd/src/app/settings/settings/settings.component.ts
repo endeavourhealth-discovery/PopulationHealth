@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageBoxDialog} from 'eds-angular4';
+import {LoggerService, MessageBoxDialog} from 'eds-angular4';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SettingsService} from './settings.service';
+import {ConceptSelectorComponent} from 'im-common/dist/concept-selector/concept-selector/concept-selector.component';
 
 @Component({
   selector: 'app-record-viewer',
@@ -21,17 +22,23 @@ export class SettingsComponent implements OnInit {
   message: string;
 
   constructor(private modal: NgbModal,
-              private service: SettingsService) { }
+              private service: SettingsService,
+              private log: LoggerService) { }
 
   ngOnInit() {
   }
 
   getMessage() {
+    this.log.info('Getting message');
     this.service.getMessage('Fred')
       .subscribe(
         (result) => this.message = result,
-        (error) => console.error(error)
+        (error) => this.log.error(error)
       )
+  }
+
+  conceptSelector() {
+    ConceptSelectorComponent.open(this.modal);
   }
 
   showDialog() {
