@@ -1,0 +1,2 @@
+# TODO: update deployment folder
+rm -rf /opt/tomcat/webapps/sample

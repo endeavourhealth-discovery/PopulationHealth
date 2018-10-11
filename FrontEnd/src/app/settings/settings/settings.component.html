@@ -1,0 +1,120 @@
+<div class="module">
+  <div class="container-fluid">
+    <div class="module-heading">
+      Module title
+
+      <!-- "Pulled" button group -->
+      <div class="pull-right">
+        <button type="button" class="btn btn-success" (click)="getMessage()">Save</button>
+        <button type="button" class="btn btn-warning">Save & close</button>
+        <button type="button" class="btn btn-danger">Close</button>
+      </div>
+
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              Table sample
+
+              <!-- "Pulled" button group -->
+              <div class="pull-right">
+                <button type="button" class="btn btn-info" (click)="showDialog()" id="showDialog">Show dialog</button>
+                <button type="button" class="btn btn-success">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+              </div>
+
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+
+                  <!-- Input group (addon) -->
+                  <div class="form-group">
+                    <label class="form-control-label">Search</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control">
+                      <span class="input-group-append">
+                        <i class="fa fa-search input-group-text"></i>
+                        <i class="fa fa-times input-group-text"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-12">
+                  <div class="scroll-box-350">
+
+                    <!-- Table -->
+                    <table class="table table-striped table-sm table-hover">
+                      <thead>
+                        <tr class="d-flex">
+                          <th class="col-1">Id</th>
+                          <th class="col-4">Name</th>
+                          <th class="col-6">Description</th>
+                          <th class="col-1"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="d-flex show-child-on-hover" *ngFor="let item of tableData" (click)="selection = item" [class.selection]="selection == item">
+                          <td class="col-1">{{item.id}}</td>
+                          <td class="col-4">{{item.name}}</td>
+                          <td class="col-6">{{item.description}}</td>
+                          <td class="col-1">
+                            <div class="pull-right child-to-show">
+                              <button type="button" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></button>
+                              <button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              Card title
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+
+                  <!-- Form group -->
+                  <div class="form-group">
+                    <label class="form-control-label required-field">Required field</label>   <!-- Required field -->
+                    <input type="text" class="form-control" placeholder="First name" [value]="message" name="message">
+                  </div>
+
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+
+                    <!-- Info-tip -->
+                    <label class="form-control-label">Optional field <span class="info-icon" [ngbTooltip]="optionalFieldTip"></span> </label>
+                    <ng-template #optionalFieldTip>
+                      <div class="text-left">This is an info-tip for the optional field</div>
+                    </ng-template>
+
+                    <input type="text" class="form-control" placeholder="Email address">
+                  </div>
+                </div>
+
+                <!-- Required field note -->
+                <small class="col-md-12 required-field-note"></small>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
