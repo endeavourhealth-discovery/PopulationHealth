@@ -1,0 +1,114 @@
+<div class="modal-header">
+  <h4 class="modal-title">Term Browser</h4>
+  <button type="button" class="close" (click)="cancel()" aria-hidden="true">&times;</button>
+</div>
+<div class="modal-body">
+  <form endUserRole="form" class="container-fluid">
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label class="control-label">Search for Terms (Use % as a pre-fix wildcard i.e. %serum)</label>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search term" aria-describedby="searchTerm"
+                 [(ngModel)]="searchTerm" (keyup)="$event.keyCode == 13 && search()" autofocus name="searchTerm">
+          <span class="input-group-append" (click)="search()" style="cursor: pointer">
+						<i class="fa fa-search input-group-text" id="searchTerm" aria-hidden="true"></i>
+					</span>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label class="control-label">Search options</label>
+        <div class="form-control-plaintext custom-control custom-checkbox">
+          <input id="includeSnomed" class="custom-control-input" type="checkbox" [(ngModel)]="snomed" (change)="search()" name="includeSnomed">
+          <label for="includeSnomed" class="custom-control-label">Search SNOMED CT</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-9">
+        <label class="control-label">Terms</label>
+        <div class="scroll-box-250 bordered-box">
+          <loadingIndicator [done]="searchTerms">
+            <table class="table table-striped table-sm">
+              <tr>
+                <th>Select</th>
+                <th>Original Term</th>
+                <th>Snomed Term</th>
+                <th>Concept ID</th>
+                <th>Original Code</th>
+                <th>Record Type</th>
+
+              </tr>
+              <tr *ngFor="let match of searchTerms">
+                <td>
+                  <button type="button" class="btn btn-xs btn-success pull-left child-to-show" (click)="addToSelection(match)">
+                    <span class="fa fa-sm fa-plus"></span>
+                  </button>
+                </td>
+                <td (click)="displayCode(match, false)">{{ match.originalTerm }}</td>
+                <td>{{ match.snomedTerm }}</td>
+                <td>{{ match.snomedConceptId }}</td>
+                <td>{{ match.originalCode }}</td>
+                <td>{{ match.recordType }}</td>
+
+              </tr>
+            </table>
+          </loadingIndicator>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="control-label">Parent Terms</label>
+        <small class="text-muted">(double-click to navigate up the hierarchy)</small>
+        <div class="scroll-box-250 form-control">
+          <div *ngFor="let parent of parents"
+               (dblclick)="displayCode(parent, true)"
+               class="hover-box show-child-on-hover striped">
+            <span ngbTooltip="{{parent.snomedConceptId}}" style="color:black;font-size:12px;cursor:pointer">{{ parent.originalTerm }}</span>
+            <button type="button" class="btn btn-xs btn-success pull-right child-to-show" (click)="addToSelection(parent)">
+              <span class="fa fa-sm fa-plus"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-9">
+        <label class="control-label">Selected Term(s) - Adding {{ treeCount }} terms to hierarchy</label>
+        <div class="scroll-box-250 bordered-box">
+          <Tree #inclusionTree [nodes]="inclusionTreeData" [options]="options">
+            <ng-template #treeNodeTemplate let-node="node">
+              <div class="custom-control custom-checkbox">
+                <input id="nodeCheck{{node.id}}"
+                       class="custom-control-input" (change)="check(node, !node.data.checked)"
+                       type="checkbox"
+                       [indeterminate]="node.data.indeterminate"
+                       [checked]="node.data.checked">
+                <label for="nodeCheck{{node.id}}" class="custom-control-label">
+                  {{ node.data.name }}
+                  <i *ngIf="node.data.id" class="info-icon" ngbTooltip="{{node.data.id}}"></i>
+                </label>
+              </div>
+            </ng-template>
+          </Tree>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="control-label">Child Terms</label>
+        <small class="text-muted">(double-click to navigate down the hierarchy)</small>
+        <div class="scroll-box-250 form-control">
+          <div *ngFor="let child of children"
+               (dblclick)="displayCode(child, true)"
+               class="hover-box show-child-on-hover striped">
+            <span ngbTooltip="{{child.snomedConceptId}}" style="color:black;font-size:12px;cursor:pointer">{{ child.originalTerm }}</span>
+            <button type="button" class="btn btn-xs btn-success pull-right child-to-show" (click)="addToSelection(child)">
+              <span class="fa fa-sm fa-plus"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="ok();">Ok</button>
+  <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+</div>

@@ -3,6 +3,8 @@ import {LoggerService, MessageBoxDialog} from 'eds-angular4';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SettingsService} from './settings.service';
 import {ConceptSelectorComponent} from 'im-common/dist/concept-selector/concept-selector/concept-selector.component';
+import {QueryEditorComponent} from '../../query/query-editor/query-editor.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-record-viewer',
@@ -22,6 +24,7 @@ export class SettingsComponent implements OnInit {
   message: string;
 
   constructor(private modal: NgbModal,
+              private router: Router,
               private service: SettingsService,
               private log: LoggerService) { }
 
@@ -43,5 +46,9 @@ export class SettingsComponent implements OnInit {
 
   showDialog() {
     MessageBoxDialog.open(this.modal, 'Delete user', 'Are you sure that you want to delete this user?', 'Delete user', 'Cancel');
+  }
+
+  showQueryEditor() {
+    this.router.navigate(['query', 'add', ''])
   }
 }

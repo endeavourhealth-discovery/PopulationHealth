@@ -3,13 +3,16 @@ import {AbstractMenuProvider} from 'eds-angular4';
 import {MenuOption} from 'eds-angular4/dist/layout/models/MenuOption';
 import {SettingsComponent} from './settings/settings/settings.component';
 import {Routes} from '@angular/router';
+import {QueryEditorComponent} from './query/query-editor/query-editor.component';
 
 @Injectable()
 export class AppMenuService implements  AbstractMenuProvider {
   static getRoutes(): Routes {
     return [
       { path: '', redirectTo : 'skeleton', pathMatch: 'full' }, // Default route
-      {path: 'skeleton', component: SettingsComponent}
+      { path: 'skeleton', component: SettingsComponent },
+      { path: 'query/:itemAction', component: QueryEditorComponent },
+      { path: 'query/:itemAction/:itemUuid', component: QueryEditorComponent }
     ];
   }
   getApplicationTitle(): string {

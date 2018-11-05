@@ -12,6 +12,8 @@ import {AppMenuService} from './app-menu.service';
 import {SettingsModule} from './settings/settings.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ModuleStateService} from 'eds-angular4/dist/common';
+import {QueryModule} from './query/query.module';
+import {FlowchartModule} from './flowchart/flowchart.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,10 @@ import {ModuleStateService} from 'eds-angular4/dist/common';
     LoggerModule,
     DialogsModule,
 
+    FlowchartModule,
+
     SettingsModule,
+    QueryModule,
 
     RouterModule.forRoot(AppMenuService.getRoutes(), {useHash: true}),
     NgbModule.forRoot(),
