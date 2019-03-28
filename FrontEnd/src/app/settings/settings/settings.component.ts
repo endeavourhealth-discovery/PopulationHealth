@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {LoggerService, MessageBoxDialog} from 'eds-angular4';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SettingsService} from './settings.service';
-import {ConceptSelectorComponent} from 'im-common/dist/concept-selector/concept-selector/concept-selector.component';
-import {QueryEditorComponent} from '../../query/query-editor/query-editor.component';
 import {Router} from '@angular/router';
 
 @Component({
@@ -41,7 +39,7 @@ export class SettingsComponent implements OnInit {
   }
 
   conceptSelector() {
-    ConceptSelectorComponent.open(this.modal);
+//    ConceptSelectorComponent.open(this.modal);
   }
 
   showDialog() {
